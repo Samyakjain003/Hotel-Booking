@@ -1,11 +1,14 @@
 package com.samyakj820.hotel.service.services;
 
 import com.samyakj820.hotel.service.entities.Hotel;
+import com.samyakj820.hotel.service.exceptions.ResourceNotFoundException;
 import com.samyakj820.hotel.service.repositories.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class HotelServiceImpl implements HotelService{
 
     @Autowired
@@ -23,7 +26,7 @@ public class HotelServiceImpl implements HotelService{
 
     @Override
     public Hotel getHotel(String hotelId) {
-        return hotelRepository.findById(hotelId).orElseThrow();
+        return hotelRepository.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("Hotel with given Id not found!!"));
     }
 
     @Override
