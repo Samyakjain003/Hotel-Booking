@@ -1,13 +1,12 @@
 package com.samyakj820.user.service.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -29,5 +28,8 @@ public class User {
 
     @Column(name = "ABOUT")
     private String about;
+
+    @Transient
+    private List<Rating> ratings;
 
 }
