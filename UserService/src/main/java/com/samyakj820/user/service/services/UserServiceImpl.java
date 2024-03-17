@@ -4,6 +4,7 @@ import com.samyakj820.user.service.entities.Hotel;
 import com.samyakj820.user.service.entities.Rating;
 import com.samyakj820.user.service.entities.User;
 import com.samyakj820.user.service.exceptions.ResourceNotFoundException;
+import com.samyakj820.user.service.external.services.HotelService;
 import com.samyakj820.user.service.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService {
     private RestTemplate restTemplate;
 
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    @Autowired
+    private HotelService hotelService;
 
     @Override
     public User saveUser(User user) {
@@ -68,8 +72,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void fetchHotelForRating(Rating rating) {
-        ResponseEntity<Hotel> response = restTemplate.getForEntity("http://HOTELSERVICE/hotels/" + rating.getHotelId(), Hotel.class);
-        Hotel hotel = response.getBody();
+        Hotel hotel = hotelService.getHotel(rating.getHotelId());
         rating.setHotel(hotel);
     }
 }
