@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void fetchUserRatings(User user) {
-        Rating ratings[] = restTemplate.getForObject("http://localhost:8083/ratings/users/" + user.getUserId(), Rating[].class);
+        Rating ratings[] = restTemplate.getForObject("http://RATINGSERVICE/ratings/users/" + user.getUserId(), Rating[].class);
         for(Rating rating : ratings) {
             fetchHotelForRating(rating);
         }
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void fetchHotelForRating(Rating rating) {
-        ResponseEntity<Hotel> response = restTemplate.getForEntity("http://localhost:8082/hotels/" + rating.getHotelId(), Hotel.class);
+        ResponseEntity<Hotel> response = restTemplate.getForEntity("http://HOTELSERVICE/hotels/" + rating.getHotelId(), Hotel.class);
         Hotel hotel = response.getBody();
         rating.setHotel(hotel);
     }
