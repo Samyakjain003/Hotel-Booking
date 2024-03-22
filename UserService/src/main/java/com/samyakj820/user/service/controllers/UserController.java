@@ -3,6 +3,7 @@ package com.samyakj820.user.service.controllers;
 import com.samyakj820.user.service.entities.User;
 import com.samyakj820.user.service.services.UserService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
+    int retryCount = 1;
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping()
@@ -29,8 +30,11 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    @CircuitBreaker(name = "ratingHotelBreaker", fallbackMethod = "ratingHotelFallback")
+//    @CircuitBreaker(name = "ratingHotelBreaker", fallbackMethod = "ratingHotelFallback")
+    @Retry(name = "ratingHotelService", fallbackMethod = "ratingHotelFallback")
     public ResponseEntity<User> getUser(@PathVariable String userId) {
+        logger.info("Retry count: {}", retryCount);
+        retryCount++;
         User userResponse = userService.getUser(userId);
         return ResponseEntity.ok(userResponse);
     }
