@@ -26,11 +26,10 @@ spring:
             authorization-grant-type: client_credentials
             scope: internal
             client-id: 0oafz0vtctgh8lfCU5d7
-            client-service: UpsKgVqXVQ-iSaxkE123dGpPhalfcs-EfBDxcDjsOKNVjr6K_STeVCIfyhCZxrc7
+            client-secret: UpsKgVqXVQ-iSaxkE123dGpPhalfcs-EfBDxcDjsOKNVjr6K_STeVCIfyhCZxrc7
           provider:
             okta:
               issuer-uri: https://dev-40613544.okta.com/oauth2/default
-
 
 #eureka:
 #  instance:

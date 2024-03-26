@@ -34,7 +34,7 @@ public class Myconfig {
         interceptors.add(new RestTemplateInterceptor(manager(clientRegistrationRepository, oAuth2AuthorizedClientRepository)));
 
         restTemplate.setInterceptors(interceptors);
-        return new RestTemplate();
+        return restTemplate;
     }
 
     @Bean
